@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margem_conteudo_item_vitrine">30dp</dimen>
+    <dimen name="margem_sub_categoria">20dp</dimen>
 </resources>
