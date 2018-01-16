@@ -25,7 +25,7 @@ class CategoriesConnection(listener: ConnecationListener) : Connection(listener)
             val jArrayCategories = jsonObject.getJSONArray("Categories")
             if (jArrayCategories.length() > 0) {
                 for (i in 0..(jArrayCategories.length() - 1)) {
-                    listCategories.add(Category(jsonObject))
+                    listCategories.add(Category(jArrayCategories.getJSONObject(i)))
                 }
             }
 

@@ -11,6 +11,7 @@ import java.net.URL
  */
 open class Connection(listener: ConnecationListener) : AsyncTask<String, String, String>() {
 
+    lateinit var conn: HttpURLConnection
     var listener: ConnecationListener
     var result: Any?
         get() {
@@ -30,15 +31,16 @@ open class Connection(listener: ConnecationListener) : AsyncTask<String, String,
         if (url != null || !url.isNullOrEmpty()) {
             try {
                 val urlConnection: URL = URL(params.toString())
-                val conn: HttpURLConnection = urlConnection.openConnection() as HttpURLConnection
+                conn = urlConnection.openConnection() as HttpURLConnection
                 conn.connectTimeout = 60000
                 conn.readTimeout = 20000
                 conn.requestMethod = getMethod()
+                conn.addRequestProperty("Content-Type", "application/json")
                 conn.connect()
 
                 val statusCode: Int = conn.responseCode
 
-                if (statusCode == 200) {
+                if (statusCode == HttpURLConnection.HTTP_OK) {
                     val inputStr: InputStream = BufferedInputStream(conn.getInputStream())
                     val reader: BufferedReader = BufferedReader(InputStreamReader(inputStr))
                     var line: String?
