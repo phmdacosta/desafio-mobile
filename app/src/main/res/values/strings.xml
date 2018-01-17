@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DesafioVitrineApp</string>
+    <string name="categorias">Categorias</string>
+    <string name="filtrar">Filtrar</string>
 </resources>
