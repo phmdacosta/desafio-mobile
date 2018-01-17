@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 import pedrodacosta.vitrine.desafio.desafiovitrineapp.R
 import pedrodacosta.vitrine.desafio.desafiovitrineapp.entities.ItemVitrine
 
@@ -43,6 +44,10 @@ class VitrineAdapter(context: Context, listItens: List<ItemVitrine>) : BaseAdapt
 //            newConvertView = convertView
 //            viewHolder = newConvertView.getTag() as ViewHolder
 //        }
+
+        Picasso.with(context)
+                .load(itemVitrine.imgItemVitrine)
+                .into(viewHolder.imgViewImgItemVitrine)
 
         viewHolder.textViewDescricaoItem.setText(itemVitrine.name)
         viewHolder.textViewValorItem.setText("R$ " + itemVitrine.valorItem.toString())

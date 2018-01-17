@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.GridView
 import android.widget.ListView
+import android.widget.ProgressBar
+import android.widget.TextView
 import pedrodacosta.vitrine.desafio.desafiovitrineapp.adapters.CategoriesAdapter
 import pedrodacosta.vitrine.desafio.desafiovitrineapp.adapters.VitrineAdapter
 import pedrodacosta.vitrine.desafio.desafiovitrineapp.connections.VitrineConnection
@@ -16,9 +19,13 @@ import pedrodacosta.vitrine.desafio.desafiovitrineapp.entities.ItemVitrine
 
 class VitrineActivity : AppCompatActivity(), ConnecationListener {
 
+    lateinit var progressBar: ProgressBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.vitrine)
+
+        progressBar = findViewById(R.id.progressbar_vitrine) as ProgressBar
 
         val vitrineConnection = VitrineConnection(this, "")
         vitrineConnection.execute()
@@ -41,8 +48,17 @@ class VitrineActivity : AppCompatActivity(), ConnecationListener {
 
     override fun getConnectionResult(result: Any?) {
         val listItemsVitrine: List<ItemVitrine> = result as List<ItemVitrine>
-        val gridView: GridView = findViewById(R.id.grid_view_vitrine) as GridView
-        val vitrineAdapter = VitrineAdapter(this, listItemsVitrine)
-        gridView.setAdapter(vitrineAdapter)
+
+        progressBar.visibility = View.GONE
+
+        if (listItemsVitrine.isEmpty()) {
+            val textViewSemProdutos: TextView = findViewById(R.id.sem_produtos_vitrine) as TextView
+            textViewSemProdutos.visibility = View.VISIBLE
+        } else {
+            val gridView: GridView = findViewById(R.id.grid_view_vitrine) as GridView
+            val vitrineAdapter = VitrineAdapter(this, listItemsVitrine)
+            gridView.setAdapter(vitrineAdapter)
+            gridView.visibility = View.VISIBLE
+        }
     }
 }

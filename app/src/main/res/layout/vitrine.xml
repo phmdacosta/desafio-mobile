@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/grid_view_vitrine"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:numColumns="@integer/num_coluna_vitrine"/>
+    android:layout_width="match_parent">
 
+    <ProgressBar
+        android:id="@+id/progressbar_vitrine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/sem_produtos_vitrine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="20sp"
+        android:text="@string/sem_produtos"
+        android:visibility="gone"/>
+
+    <GridView
+        android:id="@+id/grid_view_vitrine"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:numColumns="@integer/num_coluna_vitrine"
+        android:visibility="gone"/>
+
+</RelativeLayout>
