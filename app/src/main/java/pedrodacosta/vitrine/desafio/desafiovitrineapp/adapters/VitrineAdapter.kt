@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import pedrodacosta.vitrine.desafio.desafiovitrineapp.R
@@ -26,21 +27,25 @@ class VitrineAdapter(context: Context, listItens: List<ItemVitrine>) : BaseAdapt
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var newConvertView: View
-        var viewHolder: ViewHolder
+        val newConvertView: View
+        val viewHolder: ViewHolder
+        val itemVitrine = listItens.get(position)
 
-        if (convertView == null) {
+//        if (convertView == null) {
             viewHolder = ViewHolder()
             newConvertView = inflater.inflate(R.layout.item_vitrine, parent, false)
             viewHolder.imgViewIconDesconto = newConvertView.findViewById(R.id.icone_desconto) as ImageView
-            viewHolder.imgViewBotaoFavorito = newConvertView.findViewById(R.id.icone_desconto) as ImageView
-            viewHolder.imgViewImgItemVitrine = newConvertView.findViewById(R.id.icone_desconto) as ImageView
-            viewHolder.textViewDescricaoItem = newConvertView.findViewById(R.id.icone_desconto) as TextView
-            viewHolder.textViewValorItem = newConvertView.findViewById(R.id.icone_desconto) as TextView
-        } else {
-            newConvertView = convertView
-            viewHolder = newConvertView.getTag() as ViewHolder
-        }
+            viewHolder.imgViewBotaoFavorito = newConvertView.findViewById(R.id.botao_favorito) as ImageButton
+            viewHolder.imgViewImgItemVitrine = newConvertView.findViewById(R.id.imagem_item_vitrine) as ImageView
+            viewHolder.textViewDescricaoItem = newConvertView.findViewById(R.id.descricao_item_vitrine) as TextView
+            viewHolder.textViewValorItem = newConvertView.findViewById(R.id.valor_item_vitrine) as TextView
+//        } else {
+//            newConvertView = convertView
+//            viewHolder = newConvertView.getTag() as ViewHolder
+//        }
+
+        viewHolder.textViewDescricaoItem.setText(itemVitrine.name)
+        viewHolder.textViewValorItem.setText("R$ " + itemVitrine.valorItem.toString())
 
         return newConvertView
     }
@@ -59,7 +64,7 @@ class VitrineAdapter(context: Context, listItens: List<ItemVitrine>) : BaseAdapt
 
     private class ViewHolder() {
         lateinit var imgViewIconDesconto: ImageView
-        lateinit var imgViewBotaoFavorito: ImageView
+        lateinit var imgViewBotaoFavorito: ImageButton
         lateinit var imgViewImgItemVitrine: ImageView
         lateinit var textViewDescricaoItem: TextView
         lateinit var textViewValorItem: TextView

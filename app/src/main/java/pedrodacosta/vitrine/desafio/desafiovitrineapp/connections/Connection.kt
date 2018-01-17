@@ -5,6 +5,7 @@ import pedrodacosta.vitrine.desafio.desafiovitrineapp.ConnecationListener
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
+import java.nio.charset.Charset
 
 /**
  * Created by Pedro Henrique on 15/01/2018.
@@ -33,6 +34,16 @@ open class Connection(listener: ConnecationListener) : AsyncTask<String, String,
                 conn.readTimeout = 20000
                 conn.requestMethod = getMethod()
                 conn.addRequestProperty("Content-Type", "application/json")
+
+                val bodyRequest = getBodyRequest()
+
+                if (bodyRequest.isNotEmpty()) {
+                    val outputBytes = bodyRequest.toByteArray()
+                    val os = conn.outputStream
+                    os.write(outputBytes)
+                    os.close()
+                }
+
                 conn.connect()
 
                 val statusCode: Int = conn.responseCode
@@ -68,6 +79,10 @@ open class Connection(listener: ConnecationListener) : AsyncTask<String, String,
     }
 
     open fun getMethod(): String {
+        return ""
+    }
+
+    open fun getBodyRequest(): String {
         return ""
     }
 }

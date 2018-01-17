@@ -2,40 +2,28 @@ package pedrodacosta.vitrine.desafio.desafiovitrineapp
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.GridView
+import android.widget.ListView
+import pedrodacosta.vitrine.desafio.desafiovitrineapp.adapters.CategoriesAdapter
+import pedrodacosta.vitrine.desafio.desafiovitrineapp.adapters.VitrineAdapter
+import pedrodacosta.vitrine.desafio.desafiovitrineapp.connections.VitrineConnection
+import pedrodacosta.vitrine.desafio.desafiovitrineapp.entities.Category
+import pedrodacosta.vitrine.desafio.desafiovitrineapp.entities.ItemVitrine
 
-class VitrineActivity : AppCompatActivity() {
+class VitrineActivity : AppCompatActivity(), ConnecationListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.vitrine)
 
-        /*
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-
-                List<ItemObject> allItems = getAllItemObject();
-                CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, allItems);
-                gridview.setAdapter(customAdapter);
-
-                gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
-                    }
-                });
-        */
-
-        /*
-        Conexão
-
-        vitrineConnection: VitrineConnection = VitrineConnection()
-        vitrineConnection.iniciar()
-        */
+        val vitrineConnection = VitrineConnection(this, "")
+        vitrineConnection.execute()
     }
 
-//    fun connectionReturn(connection: Connection) {
-//        val listItemsVitrine: List<ItemVitrine> = conneciton.result() as List<ItemVitrine>
-//        val gridView: GridView = findViewById(R.id.grid_view_vitrine) as GridView
-//        val vitrineAdapter: VitrineAdapter = VitrineAdapter(this, listItemsVitrine)
-//        gridview.setAdapter(vitrineAdapter)
-//    }
+    override fun getConnectionResult(result: Any?) {
+        val listItemsVitrine: List<ItemVitrine> = result as List<ItemVitrine>
+        val gridView: GridView = findViewById(R.id.grid_view_vitrine) as GridView
+        val vitrineAdapter = VitrineAdapter(this, listItemsVitrine)
+        gridView.setAdapter(vitrineAdapter)
+    }
 }
