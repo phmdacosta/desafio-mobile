@@ -21,24 +21,26 @@ class Category {
         get() {
             return field
         }
+    var isSubCategory: Boolean = false
 
     init {
     }
 
     constructor(jObjectCategory: JSONObject) {
-        if (jObjectCategory.isNull("Id"))
+        if (!jObjectCategory.isNull("Id"))
             this.id = jObjectCategory.getLong("Id")
 
-        if (jObjectCategory.isNull("Name"))
+        if (!jObjectCategory.isNull("Name"))
             this.name = jObjectCategory.getString("Name")
 
-        if (jObjectCategory.isNull("Image"))
+        if (!jObjectCategory.isNull("Image"))
             this.image = jObjectCategory.getString("Image")
 
-        if (jObjectCategory.isNull("SubCategories")) {
+        if (!jObjectCategory.isNull("SubCategories")) {
             val jArraySubCategories = jObjectCategory.getJSONArray("SubCategories")
             for (j in 0..(jArraySubCategories.length() - 1)) {
                 val subCategory: Category = Category(jArraySubCategories.getJSONObject(j))
+                subCategory.isSubCategory = true
                 this.listSubCategories.add(subCategory)
             }
         }

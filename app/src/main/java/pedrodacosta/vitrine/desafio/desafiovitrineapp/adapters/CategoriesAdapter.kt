@@ -26,25 +26,26 @@ class CategoriesAdapter(context: Context, listItens: List<Category>) : BaseAdapt
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var newConvertView: View
-        var viewHolder: ViewHolder
+        val newConvertView: View
+        val viewHolder: ViewHolder
+        val category: Category = listItens.get(position)
 
         if (convertView == null) {
             viewHolder = ViewHolder()
-            newConvertView = inflater.inflate(R.layout.item_vitrine, parent, false)
-            viewHolder.imgViewIconCategory = newConvertView.findViewById(R.id.icone_desconto) as ImageView
-            viewHolder.textViewDescricaoCategory = newConvertView.findViewById(R.id.icone_desconto) as TextView
+            newConvertView = inflater.inflate(R.layout.item_category, parent, false)
+            viewHolder.imgViewIconCategory = newConvertView.findViewById(R.id.icone_category) as ImageView
+            viewHolder.textViewDescricaoCategory = newConvertView.findViewById(R.id.descricao_category) as TextView
         } else {
             newConvertView = convertView
             viewHolder = newConvertView.getTag() as ViewHolder
         }
 
-        var iconItem: String? = listItens.get(position).image
+        val iconItem: String? = category.image
         if (iconItem != null && iconItem.length > 0) {
             //TODO set image on category's ImageView
             //viewHolder.imgViewIconCategory.setVisibility(View.VISIBLE)
         }
-        viewHolder.textViewDescricaoCategory.setText(listItens.get(position).name)
+        viewHolder.textViewDescricaoCategory.setText(category.name)
 
         return newConvertView
     }

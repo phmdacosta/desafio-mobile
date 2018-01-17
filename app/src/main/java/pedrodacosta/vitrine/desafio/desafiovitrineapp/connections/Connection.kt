@@ -14,9 +14,6 @@ open class Connection(listener: ConnecationListener) : AsyncTask<String, String,
     lateinit var conn: HttpURLConnection
     var listener: ConnecationListener
     var result: Any?
-        get() {
-            return field
-        }
 
     init {
         this.listener = listener
@@ -25,12 +22,12 @@ open class Connection(listener: ConnecationListener) : AsyncTask<String, String,
 
     override fun doInBackground(vararg params: String?): String {
 
-        val result: StringBuilder = StringBuilder();
+        val resultConnection = StringBuilder();
         val url: String = getUrl()
 
-        if (url != null || !url.isNullOrEmpty()) {
+        if (url.isNotEmpty()) {
             try {
-                val urlConnection: URL = URL(params.toString())
+                val urlConnection: URL = URL(url)
                 conn = urlConnection.openConnection() as HttpURLConnection
                 conn.connectTimeout = 60000
                 conn.readTimeout = 20000
@@ -43,10 +40,10 @@ open class Connection(listener: ConnecationListener) : AsyncTask<String, String,
                 if (statusCode == HttpURLConnection.HTTP_OK) {
                     val inputStr: InputStream = BufferedInputStream(conn.getInputStream())
                     val reader: BufferedReader = BufferedReader(InputStreamReader(inputStr))
-                    var line: String?
-                    while (reader.readLine() != null) {
+                    var line = reader.readLine()
+                    while (line != null) {
+                        resultConnection.append(line)
                         line = reader.readLine()
-                        result.append(line)
                     }
                 }
             } catch (e: Exception) {
@@ -54,11 +51,11 @@ open class Connection(listener: ConnecationListener) : AsyncTask<String, String,
             }
         }
 
-        return result.toString()
+        return resultConnection.toString()
     }
 
-    override fun onPostExecute(result: String?) {
-        this.result = parseResult(result)
+    override fun onPostExecute(resultConnection: String?) {
+        this.result = parseResult(resultConnection)
         listener.getConnectionResult(this.result)
     }
 

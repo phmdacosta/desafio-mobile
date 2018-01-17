@@ -11,30 +11,31 @@ class CategoriesConnection(listener: ConnecationListener) : Connection(listener)
 
     override fun getUrl(): String {
         return "https://desafio.mobfiq.com.br/StorePreference/CategoryTree"
+//        return "https://api.github.com/users/dmnugent80/repos"
     }
 
     override fun getMethod(): String {
         return "GET"
     }
 
-    override fun parseResult(json: String?): Any? {
-        try {
-            val listCategories: ArrayList<Category> = ArrayList<Category>()
+    override fun parseResult(json: String?): ArrayList<Category>? {
+        val listCategories: ArrayList<Category> = ArrayList<Category>()
 
-            val jsonObject: JSONObject = JSONObject(json)
-            val jArrayCategories = jsonObject.getJSONArray("Categories")
-            if (jArrayCategories.length() > 0) {
-                for (i in 0..(jArrayCategories.length() - 1)) {
-                    listCategories.add(Category(jArrayCategories.getJSONObject(i)))
+        try {
+            val jsonObject = JSONObject(json)
+            if (!jsonObject.isNull("Categories")) {
+                val jArrayCategories = jsonObject.getJSONArray("Categories")
+                if (jArrayCategories.length() > 0) {
+                    for (i in 0..(jArrayCategories.length() - 1)) {
+                        listCategories.add(Category(jArrayCategories.getJSONObject(i)))
+                    }
                 }
             }
-
-            return listCategories
 
         } catch (e: Exception) {
 
         }
 
-        return null
+        return listCategories
     }
 }
